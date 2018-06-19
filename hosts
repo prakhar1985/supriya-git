@@ -1,0 +1,41 @@
+[GenericExample:vars]
+
+###########################################################################
+### Ansible Vars
+###########################################################################
+timeout=60
+ansible_become=yes
+ansible_ssh_user=ec2-user
+
+
+[GenericExample:children]
+towers
+windows
+support
+
+[towers]
+## These are the towers
+tower1.5d65.internal public_host_name=tower1.5d65.example.opentlc.com ssh_host=ec2-52-77-148-244.ap-southeast-1.compute.amazonaws.com
+tower2.5d65.internal public_host_name=tower2.5d65.example.opentlc.com ssh_host=ec2-13-229-14-194.ap-southeast-1.compute.amazonaws.com
+tower3.5d65.internal public_host_name=tower3.5d65.example.opentlc.com ssh_host=ec2-13-251-118-205.ap-southeast-1.compute.amazonaws.com
+
+
+[windows]
+## These are the activedirectory servers
+ad1.5d65.internal ssh_host=ad1.5d65.example.opentlc.com ansible_password=jVMijRwLbI02gFCo2xkjlZ9lxEA7bm7zgg==
+
+
+## These are the supporthosts
+[support]
+support1.5d65.internal ssh_host=ec2-52-221-57-119.ap-southeast-1.compute.amazonaws.com
+support2.5d65.internal ssh_host=ec2-13-251-70-226.ap-southeast-1.compute.amazonaws.com
+
+[windows:vars]
+ansible_connection=winrm
+ansible_port=5986
+ansible_ssh_port=5986
+ansible_user=Administrator
+ansible_ssh_user=Administrator
+ansible_winrm_server_cert_validation=ignore
+ansible_winrm_transport=basic
+ansible_become=false
